@@ -1,15 +1,26 @@
-import { Box, Divider, Drawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Toolbar } from '@mui/material'
-import React from 'react'
-import MailIcon from '@mui/icons-material/Mail';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import HomeIcon from '@mui/icons-material/Home';
-import EqualizerIcon from '@mui/icons-material/Equalizer';
+import {
+  Box,
+  Divider,
+  Drawer,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  Toolbar,
+} from "@mui/material";
+import React, { CSSProperties } from "react";
+import MailIcon from "@mui/icons-material/Mail";
+import InboxIcon from "@mui/icons-material/MoveToInbox";
+import HomeIcon from "@mui/icons-material/Home";
+import EqualizerIcon from "@mui/icons-material/Equalizer";
+import { NavLink } from "react-router-dom";
 
 interface SidebarProps {
-  drawerWidth: number,
-  mobileOpen: boolean,
-  handleDrawerTransitionEnd: () => void,
-  handleDrawerClose: () => void,
+  drawerWidth: number;
+  mobileOpen: boolean;
+  handleDrawerTransitionEnd: () => void;
+  handleDrawerClose: () => void;
 }
 
 // type SidebarProps = {
@@ -20,17 +31,31 @@ interface SidebarProps {
 // }
 
 interface menuItem {
-  text: string,
-  path: string,
-  icon: React.ComponentType,
+  text: string;
+  path: string;
+  icon: React.ComponentType;
 }
 
-const Sidebar = ({drawerWidth, mobileOpen, handleDrawerTransitionEnd, handleDrawerClose}:SidebarProps) => {
-
+const Sidebar = ({
+  drawerWidth,
+  mobileOpen,
+  handleDrawerTransitionEnd,
+  handleDrawerClose,
+}: SidebarProps) => {
   const MenuItems: menuItem[] = [
-    {text: 'Home', path: '/', icon: HomeIcon},
-    {text: 'Report', path: '/report', icon: EqualizerIcon},
-  ]
+    { text: "Home", path: "/", icon: HomeIcon },
+    { text: "Report", path: "/report", icon: EqualizerIcon },
+  ];
+
+  const baseLinkStyle: CSSProperties = {
+    textDecoration: 'none',
+    color: 'inherit',
+    display: 'block',
+  };
+
+  const activeLinkStyle: CSSProperties = {
+    backgroundColor: "rgba(0, 0, 0, 0.08)",
+  };
 
   const drawer = (
     <div>
@@ -38,15 +63,22 @@ const Sidebar = ({drawerWidth, mobileOpen, handleDrawerTransitionEnd, handleDraw
       <Divider />
       <List>
         {MenuItems.map((item, index) => (
-          <ListItem key={index} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {/* {index % 2 === 0 ? <InboxIcon /> : <MailIcon />} */}
-                <item.icon />
-              </ListItemIcon>
-              <ListItemText primary={item.text} />
-            </ListItemButton>
-          </ListItem>
+          <NavLink to={item.path} key={item.text} style={({isActive}) => {
+            return {
+              ...baseLinkStyle,
+              ...(isActive ? activeLinkStyle : {})
+              }
+              }}>
+            <ListItem key={index} disablePadding>
+              <ListItemButton>
+                <ListItemIcon>
+                  {/* {index % 2 === 0 ? <InboxIcon /> : <MailIcon />} */}
+                  <item.icon />
+                </ListItemIcon>
+                <ListItemText primary={item.text} />
+              </ListItemButton>
+            </ListItem>
+          </NavLink>
         ))}
       </List>
     </div>
@@ -54,8 +86,8 @@ const Sidebar = ({drawerWidth, mobileOpen, handleDrawerTransitionEnd, handleDraw
 
   return (
     <>
-          {/* サイドバー */}
-          <Box
+      {/* サイドバー */}
+      <Box
         component="nav"
         sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
         aria-label="mailbox folders"
@@ -70,8 +102,11 @@ const Sidebar = ({drawerWidth, mobileOpen, handleDrawerTransitionEnd, handleDraw
             keepMounted: true, // Better open performance on mobile.
           }}
           sx={{
-            display: { xs: 'block', sm: 'none' },
-            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+            display: { xs: "block", sm: "none" },
+            "& .MuiDrawer-paper": {
+              boxSizing: "border-box",
+              width: drawerWidth,
+            },
           }}
         >
           {drawer}
@@ -81,8 +116,11 @@ const Sidebar = ({drawerWidth, mobileOpen, handleDrawerTransitionEnd, handleDraw
         <Drawer
           variant="permanent"
           sx={{
-            display: { xs: 'none', sm: 'block' },
-            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+            display: { xs: "none", sm: "block" },
+            "& .MuiDrawer-paper": {
+              boxSizing: "border-box",
+              width: drawerWidth,
+            },
           }}
           open
         >
@@ -90,7 +128,7 @@ const Sidebar = ({drawerWidth, mobileOpen, handleDrawerTransitionEnd, handleDraw
         </Drawer>
       </Box>
     </>
-  )
-}
+  );
+};
 
-export default Sidebar
+export default Sidebar;
