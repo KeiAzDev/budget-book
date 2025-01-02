@@ -1,11 +1,18 @@
+import React from 'react'
 import './App.css'
+import { Route, BrowserRouter as Router, Routes } from 'react-router-dom'
+import Home from './pages/Home'
+import Report from './pages/report'
 
 function App() {
 
   return (
-    <>
-      app
-    </>
+    <Router>
+      <Routes>
+        <Route path='/' element={<Home />} />
+        <Route path='/report' element={<Report />} />
+      </Routes>
+    </Router>
   )
 }
 
