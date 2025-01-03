@@ -48,9 +48,9 @@ const Sidebar = ({
   ];
 
   const baseLinkStyle: CSSProperties = {
-    textDecoration: 'none',
-    color: 'inherit',
-    display: 'block',
+    textDecoration: "none",
+    color: "inherit",
+    display: "block",
   };
 
   const activeLinkStyle: CSSProperties = {
@@ -63,12 +63,16 @@ const Sidebar = ({
       <Divider />
       <List>
         {MenuItems.map((item, index) => (
-          <NavLink to={item.path} key={item.text} style={({isActive}) => {
-            return {
-              ...baseLinkStyle,
-              ...(isActive ? activeLinkStyle : {})
-              }
-              }}>
+          <NavLink
+            to={item.path}
+            key={item.text}
+            style={({ isActive }) => {
+              return {
+                ...baseLinkStyle,
+                ...(isActive ? activeLinkStyle : {}),
+              };
+            }}
+          >
             <ListItem key={index} disablePadding>
               <ListItemButton>
                 <ListItemIcon>
@@ -96,7 +100,7 @@ const Sidebar = ({
         <Drawer
           variant="temporary"
           open={mobileOpen}
-          onTransitionEnd={handleDrawerTransitionEnd}
+          // onTransitionEnd={handleDrawerTransitionEnd}
           onClose={handleDrawerClose}
           ModalProps={{
             keepMounted: true, // Better open performance on mobile.
